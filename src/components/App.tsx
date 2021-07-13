@@ -41,6 +41,13 @@ const FusePoolPage = loadable(
   }
 );
 
+const FuseAnalyticsPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/Fuse/Analytics/FuseAnalyticsPage"),
+  {
+    fallback: <FullPageSpinner />,
+  }
+);
+
 const FusePoolInfoPage = loadable(
   () => import(/* webpackPrefetch: true */ "./pages/Fuse/FusePoolInfoPage"),
   {
@@ -131,6 +138,7 @@ const App = memo(() => {
         <Route path="/pool2" element={<Pool2Page />} />
 
         <Route path="/fuse" element={<FusePoolsPage />} />
+        <Route path="/fuse/analytics" element={<FuseAnalyticsPage />} />
         <Route path="/fuse/liquidations" element={<FuseLiquidationsPage />} />
         <Route path="/fuse/new-pool" element={<FusePoolCreatePage />} />
         <Route path="/fuse/pool/:poolId" element={<FusePoolPage />} />
