@@ -28,42 +28,49 @@ const TranchesPage = loadable(
 );
 
 const FusePoolsPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/Fuse/FusePoolsPage"),
+  () => import(/* webpackPrefetch: true */ "./pages/Fuse/Pools/FusePoolsPage"),
   {
     fallback: <FullPageSpinner />,
   }
 );
 
 const FusePoolPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/Fuse/FusePoolPage"),
+  () => import(/* webpackPrefetch: true */ "./pages/Fuse/Pools/FusePoolPage"),
+  {
+    fallback: <FullPageSpinner />,
+  }
+);
+
+const FuseAnalyticsPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/Fuse/Analytics/FuseAnalyticsPage"),
   {
     fallback: <FullPageSpinner />,
   }
 );
 
 const FusePoolInfoPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/Fuse/FusePoolInfoPage"),
+  () => import(/* webpackPrefetch: true */ "./pages/Fuse/Pools/FusePoolInfoPage"),
   {
     fallback: <FullPageSpinner />,
   }
 );
 
 const FusePoolEditPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/Fuse/FusePoolEditPage"),
+  () => import(/* webpackPrefetch: true */ "./pages/Fuse/Pools/FusePoolEditPage"),
   {
     fallback: <FullPageSpinner />,
   }
 );
 
 const FusePoolCreatePage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/Fuse/FusePoolCreatePage"),
+  () => import(/* webpackPrefetch: true */ "./pages/Fuse/Pools/FusePoolCreatePage"),
   {
     fallback: <FullPageSpinner />,
   }
 );
 
 const FuseLiquidationsPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/Fuse/FuseLiquidationsPage"),
+  () => import(/* webpackPrefetch: true */ "./pages/Fuse/Pools/FuseLiquidationsPage"),
   {
     fallback: <FullPageSpinner />,
   }
@@ -131,6 +138,7 @@ const App = memo(() => {
         <Route path="/pool2" element={<Pool2Page />} />
 
         <Route path="/fuse" element={<FusePoolsPage />} />
+        <Route path="/fuse/analytics" element={<FuseAnalyticsPage />} />
         <Route path="/fuse/liquidations" element={<FuseLiquidationsPage />} />
         <Route path="/fuse/new-pool" element={<FusePoolCreatePage />} />
         <Route path="/fuse/pool/:poolId" element={<FusePoolPage />} />

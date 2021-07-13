@@ -3,8 +3,8 @@ import { ButtonGroup, Input, Link, Text } from "@chakra-ui/react";
 import { RowOrColumn, Row, Center, useWindowSize } from "utils/chakraUtils";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useIsSmallScreen } from "../../../hooks/useIsSmallScreen";
-import DashboardBox from "../../shared/DashboardBox";
+import { useIsSmallScreen } from "../../../../hooks/useIsSmallScreen";
+import DashboardBox from "../../../shared/DashboardBox";
 import { Link as RouterLink } from "react-router-dom";
 
 const activeStyle = { bg: "#FFF", color: "#000" };
@@ -116,7 +116,7 @@ const FuseTabBar = () => {
               <Link
                 /* @ts-ignore */
                 as={RouterLink}
-                to={`/fuse/pool/${poolId}`}
+                to={`/fuse/pool/${ poolId }`}
                 className="no-underline"
               >
                 <Center expand px={2} fontWeight="bold">
@@ -134,7 +134,7 @@ const FuseTabBar = () => {
               <Link
                 /* @ts-ignore */
                 as={RouterLink}
-                to={`/fuse/pool/${poolId}/info`}
+                to={`/fuse/pool/${ poolId }/info`}
                 className="no-underline"
               >
                 <Center expand px={2} fontWeight="bold">
@@ -168,7 +168,7 @@ const TabLink = ({ route, text }: { route: string; text: string }) => {
       <DashboardBox
         height="35px"
         {...(route ===
-        location.pathname.replace(/\/+$/, "") + window.location.search
+          location.pathname.replace(/\/+$/, "") + window.location.search
           ? activeStyle
           : noop)}
       >
@@ -212,7 +212,7 @@ const NewPoolButton = () => {
       ml={isMobile ? 0 : "auto"}
       height="35px"
       {...("/fuse/new-pool" ===
-      location.pathname.replace(/\/+$/, "") + window.location.search
+        location.pathname.replace(/\/+$/, "") + window.location.search
         ? activeStyle
         : noop)}
     >

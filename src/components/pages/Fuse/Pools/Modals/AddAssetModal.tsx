@@ -18,21 +18,21 @@ import { useTranslation } from "react-i18next";
 
 import DashboardBox, {
   DASHBOARD_BOX_PROPS,
-} from "../../../shared/DashboardBox";
-import { ModalDivider, MODAL_PROPS } from "../../../shared/Modal";
+} from "../../../../shared/DashboardBox";
+import { ModalDivider, MODAL_PROPS } from "../../../../shared/Modal";
 
 import {
   ETH_TOKEN_DATA,
   TokenData,
   useTokenData,
-} from "../../../../hooks/useTokenData";
-import SmallWhiteCircle from "../../../../static/small-white-circle.png";
-import { useRari } from "../../../../context/RariContext";
-import { FuseIRMDemoChartOptions } from "../../../../utils/chartOptions";
-import { SliderWithLabel } from "../../../shared/SliderWithLabel";
+} from "../../../../../hooks/useTokenData";
+import SmallWhiteCircle from "../../../../../static/small-transparent-logo.png";
+import { useRari } from "../../../../../context/RariContext";
+import { FuseIRMDemoChartOptions } from "../../../../../utils/chartOptions";
+import { SliderWithLabel } from "../../../../shared/SliderWithLabel";
 import { convertIRMtoCurve } from "../FusePoolInfoPage";
 
-import Fuse from "../../../../fuse-sdk";
+import Fuse from "../../../../../fuse-sdk/src";
 import Chart from "react-apexcharts";
 import {
   ConfigRow,
@@ -41,13 +41,13 @@ import {
 } from "../FusePoolEditPage";
 import { useQuery, useQueryClient } from "react-query";
 import { QuestionIcon } from "@chakra-ui/icons";
-import { SimpleTooltip } from "../../../shared/SimpleTooltip";
+import { SimpleTooltip } from "../../../../shared/SimpleTooltip";
 import BigNumber from "bignumber.js";
-import { createComptroller } from "../../../../utils/createComptroller";
+import { createComptroller } from "../../../../../utils/createComptroller";
 import { testForCTokenErrorAndSend } from "./PoolModal/AmountSelect";
 
-import { handleGenericError } from "../../../../utils/errorHandling";
-import { USDPricedFuseAsset } from "../../../../utils/fetchFusePoolData";
+import { handleGenericError } from "../../../../../utils/errorHandling";
+import { USDPricedFuseAsset } from "../../../../../utils/fetchFusePoolData";
 import LogRocket from "logrocket";
 
 const formatPercentage = (value: number) => value.toFixed(0) + "%";
@@ -381,7 +381,7 @@ export const AssetSettings = ({
         </SimpleTooltip>
 
         {cTokenData &&
-        collateralFactor !==
+          collateralFactor !==
           scaleCollateralFactor(cTokenData.collateralFactorMantissa) ? (
           <SaveButton ml={3} onClick={updateCollateralFactor} />
         ) : null}
@@ -409,7 +409,7 @@ export const AssetSettings = ({
         </SimpleTooltip>
 
         {cTokenData &&
-        reserveFactor !==
+          reserveFactor !==
           scaleReserveFactor(cTokenData.reserveFactorMantissa) ? (
           <SaveButton ml={3} onClick={updateReserveFactor} />
         ) : null}
@@ -436,7 +436,7 @@ export const AssetSettings = ({
         </SimpleTooltip>
 
         {cTokenData &&
-        adminFee !== scaleAdminFee(cTokenData.adminFeeMantissa) ? (
+          adminFee !== scaleAdminFee(cTokenData.adminFeeMantissa) ? (
           <SaveButton ml={3} onClick={updateAdminFee} />
         ) : null}
 
@@ -494,7 +494,7 @@ export const AssetSettings = ({
         </Select>
 
         {cTokenData &&
-        cTokenData.interestRateModelAddress.toLowerCase() !==
+          cTokenData.interestRateModelAddress.toLowerCase() !==
           interestRateModel.toLowerCase() ? (
           <SaveButton
             height="40px"
@@ -623,7 +623,7 @@ const AddAssetModal = ({
                   src={tokenData.logoURL}
                   boxSize="50px"
                   borderRadius="50%"
-                  backgroundImage={`url(${SmallWhiteCircle})`}
+                  backgroundImage={`url(${ SmallWhiteCircle })`}
                   backgroundSize="100% auto"
                 />
               ) : null}

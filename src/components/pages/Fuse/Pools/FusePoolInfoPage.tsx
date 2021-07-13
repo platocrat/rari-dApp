@@ -19,14 +19,14 @@ import {
 import { memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { useRari } from "../../../context/RariContext";
-import { useIsSemiSmallScreen } from "../../../hooks/useIsSemiSmallScreen";
-import { shortUsdFormatter } from "../../../utils/bigUtils";
-import { FuseUtilizationChartOptions } from "../../../utils/chartOptions";
+import { useRari } from "../../../../context/RariContext";
+import { useIsSemiSmallScreen } from "../../../../hooks/useIsSemiSmallScreen";
+import { shortUsdFormatter } from "../../../../utils/bigUtils";
+import { FuseUtilizationChartOptions } from "../../../../utils/chartOptions";
 
-import DashboardBox, { DASHBOARD_BOX_PROPS } from "../../shared/DashboardBox";
-import { Header } from "../../shared/Header";
-import { ModalDivider } from "../../shared/Modal";
+import DashboardBox, { DASHBOARD_BOX_PROPS } from "../../../shared/DashboardBox";
+import { Header } from "../../../shared/Header";
+import { ModalDivider } from "../../../shared/Modal";
 import { Link as RouterLink } from "react-router-dom";
 
 import Chart from "react-apexcharts";
@@ -34,15 +34,15 @@ import Chart from "react-apexcharts";
 import FuseStatsBar from "./FuseStatsBar";
 import FuseTabBar from "./FuseTabBar";
 import { useQuery } from "react-query";
-import { useFusePoolData } from "../../../hooks/useFusePoolData";
+import { useFusePoolData } from "../../../../hooks/useFusePoolData";
 
-import { useTokenData } from "../../../hooks/useTokenData";
+import { useTokenData } from "../../../../hooks/useTokenData";
 import { CTokenIcon } from "./FusePoolsPage";
-import { shortAddress } from "../../../utils/shortAddress";
-import { USDPricedFuseAsset } from "../../../utils/fetchFusePoolData";
-import { createComptroller } from "../../../utils/createComptroller";
-import Fuse from "../../../fuse-sdk";
-import CaptionedStat from "../../shared/CaptionedStat";
+import { shortAddress } from "../../../../utils/shortAddress";
+import { USDPricedFuseAsset } from "../../../../utils/fetchFusePoolData";
+import { createComptroller } from "../../../../utils/createComptroller";
+import Fuse from "../../../../fuse-sdk";
+import CaptionedStat from "../../../shared/CaptionedStat";
 import Footer from "components/shared/Footer";
 
 export const useExtraPoolInfo = (comptrollerAddress: string) => {
@@ -227,7 +227,7 @@ const OracleAndInterestRates = ({
           className="no-underline"
           isExternal
           ml="auto"
-          href={`https://rari.grafana.net/d/HChNahwGk/fuse-pool-details?orgId=1&refresh=10s&var-poolID=${poolId}`}
+          href={`https://rari.grafana.net/d/HChNahwGk/fuse-pool-details?orgId=1&refresh=10s&var-poolID=${ poolId }`}
         >
           <DashboardBox height="35px">
             <Center expand px={2} fontWeight="bold">
@@ -406,12 +406,12 @@ const AssetAndOtherInfo = ({ assets }: { assets: USDPricedFuseAsset[] }) => {
     selectedAsset.totalSupply === "0"
       ? 0
       : parseFloat(
-          // Use Max.min() to cap util at 100%
-          Math.min(
-            (selectedAsset.totalBorrow / selectedAsset.totalSupply) * 100,
-            100
-          ).toFixed(0)
-        );
+        // Use Max.min() to cap util at 100%
+        Math.min(
+          (selectedAsset.totalBorrow / selectedAsset.totalSupply) * 100,
+          100
+        ).toFixed(0)
+      );
 
   const { data } = useQuery(selectedAsset.cToken + " curves", async () => {
     const interestRateModel = await fuse.getInterestRateModel(
@@ -614,10 +614,10 @@ const AssetAndOtherInfo = ({ assets }: { assets: USDPricedFuseAsset[] }) => {
               selectedAsset.totalSupplyUSD.toString() === "0"
                 ? "0%"
                 : (
-                    (selectedAsset.totalBorrowUSD /
-                      selectedAsset.totalSupplyUSD) *
-                    100
-                  ).toFixed(0) + "%"
+                  (selectedAsset.totalBorrowUSD /
+                    selectedAsset.totalSupplyUSD) *
+                  100
+                ).toFixed(0) + "%"
             }
             statSize="lg"
             captionSize="xs"
@@ -650,8 +650,8 @@ export const convertIRMtoCurve = (interestRateModel: any, fuse: Fuse) => {
           fuse.web3.utils.toBN((i * 1e16).toString())
         ) /
           1e18) *
-          (4 * 60 * 24) +
-          1,
+        (4 * 60 * 24) +
+        1,
         365
       ) -
         1) *
@@ -663,8 +663,8 @@ export const convertIRMtoCurve = (interestRateModel: any, fuse: Fuse) => {
           fuse.web3.utils.toBN((i * 1e16).toString())
         ) /
           1e18) *
-          (4 * 60 * 24) +
-          1,
+        (4 * 60 * 24) +
+        1,
         365
       ) -
         1) *

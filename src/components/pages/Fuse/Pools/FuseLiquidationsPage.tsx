@@ -19,9 +19,9 @@ import { useRari } from "context/RariContext";
 import { useIsSmallScreen } from "hooks/useIsSmallScreen";
 import { smallUsdFormatter } from "utils/bigUtils";
 
-import DashboardBox from "../../shared/DashboardBox";
-import { Header } from "../../shared/Header";
-import { ModalDivider } from "../../shared/Modal";
+import DashboardBox from "../../../shared/DashboardBox";
+import { Header } from "../../../shared/Header";
+import { ModalDivider } from "../../../shared/Modal";
 
 import { Link as RouterLink } from "react-router-dom";
 import FuseStatsBar from "./FuseStatsBar";
@@ -529,7 +529,7 @@ const LiquidationRow = ({
                 />
                 {smallUsdFormatter(
                   liquidation.repayAmount /
-                    10 ** liquidation.borrowedTokenUnderlyingDecimals
+                  10 ** liquidation.borrowedTokenUnderlyingDecimals
                 ).replace("$", "")}{" "}
                 {liquidation.borrowedTokenUnderlyingSymbol}
               </Column>
@@ -595,11 +595,11 @@ const LiquidatablePositionsList = ({
             label={
               showAtRiskPositions
                 ? t(
-                    "At risk positions are positions that are less than 110% collateralized."
-                  )
+                  "At risk positions are positions that are less than 110% collateralized."
+                )
                 : t(
-                    "Liquidatable positions are positions less than 100% collateralized."
-                  )
+                  "Liquidatable positions are positions less than 100% collateralized."
+                )
             }
           >
             <Text fontWeight="bold">
@@ -702,7 +702,7 @@ const PositionRow = ({
         as={RouterLink}
         width="100%"
         className="no-underline"
-        to={"/fuse/pool/" + position.poolID + `?address=${position.account}`}
+        to={"/fuse/pool/" + position.poolID + `?address=${ position.account }`}
       >
         <Row
           mainAxisAlignment="flex-start"

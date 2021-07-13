@@ -42,14 +42,14 @@ import { ModalDivider } from "components/shared/Modal";
 import { SimpleTooltip } from "components/shared/SimpleTooltip";
 import { SwitchCSS } from "components/shared/SwitchCSS";
 
-import FuseStatsBar from "./FuseStatsBar";
-import FuseTabBar from "./FuseTabBar";
-import PoolModal, { Mode } from "./Modals/PoolModal";
+import FuseStatsBar from "../Pools/FuseStatsBar";
+import FuseTabBar from "../Pools/FuseTabBar";
+import PoolModal, { Mode } from "../Pools/Modals/PoolModal";
 
 import LogRocket from "logrocket";
 import Footer from "components/shared/Footer";
 
-const FusePoolPage = memo(() => {
+const FuseAnalyticsPage = memo(() => {
   const { isAuthed } = useRari();
 
   const isMobile = useIsSemiSmallScreen();
@@ -129,7 +129,7 @@ const FusePoolPage = memo(() => {
   );
 });
 
-export default FusePoolPage;
+export default FuseAnalyticsPage;
 
 const CollateralRatioBar = ({
   assets,
@@ -168,9 +168,9 @@ const CollateralRatioBar = ({
         </SimpleTooltip>
 
         <SimpleTooltip
-          label={`You're using ${ratio.toFixed(1)}% of your ${smallUsdFormatter(
+          label={`You're using ${ ratio.toFixed(1) }% of your ${ smallUsdFormatter(
             maxBorrow
-          )} borrow limit.`}
+          ) } borrow limit.`}
         >
           <Box width="100%">
             <Progress
@@ -180,10 +180,10 @@ const CollateralRatioBar = ({
                 ratio <= 40
                   ? "whatsapp"
                   : ratio <= 60
-                  ? "yellow"
-                  : ratio <= 80
-                  ? "orange"
-                  : "red"
+                    ? "yellow"
+                    : ratio <= 80
+                      ? "orange"
+                      : "red"
               }
               borderRadius="10px"
               value={ratio}

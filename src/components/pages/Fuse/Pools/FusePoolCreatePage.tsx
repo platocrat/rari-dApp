@@ -12,24 +12,24 @@ import { Column, Center, Row } from "utils/chakraUtils";
 import { memo, ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useRari } from "../../../context/RariContext";
-import { useIsSemiSmallScreen } from "../../../hooks/useIsSemiSmallScreen";
+import { useRari } from "../../../../context/RariContext";
+import { useIsSemiSmallScreen } from "../../../../hooks/useIsSemiSmallScreen";
 
-import DashboardBox from "../../shared/DashboardBox";
-import { Header } from "../../shared/Header";
-import { ModalDivider } from "../../shared/Modal";
+import DashboardBox from "../../../shared/DashboardBox";
+import { Header } from "../../../shared/Header";
+import { ModalDivider } from "../../../shared/Modal";
 
 import FuseStatsBar from "./FuseStatsBar";
 import FuseTabBar from "./FuseTabBar";
-import { SliderWithLabel } from "../../shared/SliderWithLabel";
+import { SliderWithLabel } from "../../../shared/SliderWithLabel";
 
 import BigNumber from "bignumber.js";
 import { useNavigate } from "react-router-dom";
-import Fuse from "../../../fuse-sdk";
+import Fuse from "../../../../fuse-sdk";
 import { AddIcon, QuestionIcon } from "@chakra-ui/icons";
-import { SimpleTooltip } from "../../shared/SimpleTooltip";
+import { SimpleTooltip } from "../../../shared/SimpleTooltip";
 
-import { handleGenericError } from "../../../utils/errorHandling";
+import { handleGenericError } from "../../../../utils/errorHandling";
 import LogRocket from "logrocket";
 
 const formatPercentage = (value: number) => value.toFixed(0) + "%";
@@ -161,7 +161,7 @@ const PoolConfiguration = () => {
       LogRocket.track("Fuse-CreatePool");
 
       let id = event.returnValues.index;
-      navigate(`/fuse/pool/${id}/edit`);
+      navigate(`/fuse/pool/${ id }/edit`);
     } catch (e) {
       handleGenericError(e, toast);
     }

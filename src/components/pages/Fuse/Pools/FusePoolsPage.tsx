@@ -5,9 +5,9 @@ import { useRari } from "context/RariContext";
 import { useIsSmallScreen } from "hooks/useIsSmallScreen";
 import { smallUsdFormatter } from "utils/bigUtils";
 
-import DashboardBox from "../../shared/DashboardBox";
-import { Header } from "../../shared/Header";
-import { ModalDivider } from "../../shared/Modal";
+import DashboardBox from "../../../shared/DashboardBox";
+import { Header } from "../../../shared/Header";
+import { ModalDivider } from "../../../shared/Modal";
 
 import { Link as RouterLink } from "react-router-dom";
 import FuseStatsBar from "./FuseStatsBar";

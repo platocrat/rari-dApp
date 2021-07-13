@@ -12,33 +12,33 @@ import { Column, RowOrColumn, Center, Row } from "utils/chakraUtils";
 import { memo, ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { useRari } from "../../../context/RariContext";
-import { useIsSemiSmallScreen } from "../../../hooks/useIsSemiSmallScreen";
+import { useRari } from "../../../../context/RariContext";
+import { useIsSemiSmallScreen } from "../../../../hooks/useIsSemiSmallScreen";
 
-import DashboardBox from "../../shared/DashboardBox";
-import { Header } from "../../shared/Header";
-import { ModalDivider } from "../../shared/Modal";
+import DashboardBox from "../../../shared/DashboardBox";
+import { Header } from "../../../shared/Header";
+import { ModalDivider } from "../../../shared/Modal";
 
 import FuseStatsBar from "./FuseStatsBar";
 import FuseTabBar from "./FuseTabBar";
-import { SliderWithLabel } from "../../shared/SliderWithLabel";
+import { SliderWithLabel } from "../../../shared/SliderWithLabel";
 import AddAssetModal, { AssetSettings } from "./Modals/AddAssetModal";
-import { useFusePoolData } from "../../../hooks/useFusePoolData";
-import { USDPricedFuseAsset } from "../../../utils/fetchFusePoolData";
+import { useFusePoolData } from "../../../../hooks/useFusePoolData";
+import { USDPricedFuseAsset } from "../../../../utils/fetchFusePoolData";
 import { CTokenIcon } from "./FusePoolsPage";
-import { createComptroller } from "../../../utils/createComptroller";
+import { createComptroller } from "../../../../utils/createComptroller";
 import { useQueryClient, useQuery } from "react-query";
 import { WhitelistInfo } from "./FusePoolCreatePage";
 
 import { useExtraPoolInfo } from "./FusePoolInfoPage";
 import BigNumber from "bignumber.js";
-import { useTokenData } from "../../../hooks/useTokenData";
+import { useTokenData } from "../../../../hooks/useTokenData";
 import LogRocket from "logrocket";
-import { handleGenericError } from "../../../utils/errorHandling";
-import { useAuthedCallback } from "../../../hooks/useAuthedCallback";
+import { handleGenericError } from "../../../../utils/errorHandling";
+import { useAuthedCallback } from "../../../../hooks/useAuthedCallback";
 
 const activeStyle = { bg: "#FFF", color: "#000" };
-const noop = () => {};
+const noop = () => { };
 
 const formatPercentage = (value: number) => value.toFixed(0) + "%";
 
@@ -518,7 +518,7 @@ const PoolConfiguration = ({
               <Text fontWeight="bold">{t("Liquidation Incentive")}:</Text>
 
               {data &&
-              scaleLiquidationIncentive(data.liquidationIncentive) !==
+                scaleLiquidationIncentive(data.liquidationIncentive) !==
                 liquidationIncentive ? (
                 <SaveButton onClick={updateLiquidationIncentive} />
               ) : null}

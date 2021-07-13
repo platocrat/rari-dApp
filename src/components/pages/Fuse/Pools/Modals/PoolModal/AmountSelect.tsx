@@ -16,7 +16,7 @@ import {
   Tabs,
   Spinner,
 } from "@chakra-ui/react";
-import SmallWhiteCircle from "../../../../../static/small-white-circle.png";
+import SmallWhiteCircle from "../../../../../../static/small-transparent-logo.png";
 
 import BigNumber from "bignumber.js";
 
@@ -25,32 +25,32 @@ import { UseQueryResult, useQuery, useQueryClient } from "react-query";
 import { HashLoader } from "react-spinners";
 
 import { useTranslation } from "react-i18next";
-import { useRari } from "../../../../../context/RariContext";
-import { fetchTokenBalance } from "../../../../../hooks/useTokenBalance";
-import { BN, smallUsdFormatter } from "../../../../../utils/bigUtils";
+import { useRari } from "../../../../../../context/RariContext";
+import { fetchTokenBalance } from "../../../../../../hooks/useTokenBalance";
+import { BN, smallUsdFormatter } from "../../../../../../utils/bigUtils";
 
-import DashboardBox from "../../../../shared/DashboardBox";
-import { ModalDivider } from "../../../../shared/Modal";
+import DashboardBox from "../../../../../shared/DashboardBox";
+import { ModalDivider } from "../../../../../shared/Modal";
 
 import { Mode } from ".";
 
 import {
   ETH_TOKEN_DATA,
   useTokenData,
-} from "../../../../../hooks/useTokenData";
-import { useBorrowLimit } from "../../../../../hooks/useBorrowLimit";
+} from "../../../../../../hooks/useTokenData";
+import { useBorrowLimit } from "../../../../../../hooks/useBorrowLimit";
 
-import Fuse from "../../../../../fuse-sdk";
-import { USDPricedFuseAsset } from "../../../../../utils/fetchFusePoolData";
-import { createComptroller } from "../../../../../utils/createComptroller";
-import { handleGenericError } from "../../../../../utils/errorHandling";
+import Fuse from "../../../../../../fuse-sdk/src";
+import { USDPricedFuseAsset } from "../../../../../../utils/fetchFusePoolData";
+import { createComptroller } from "../../../../../../utils/createComptroller";
+import { handleGenericError } from "../../../../../../utils/errorHandling";
 import { ComptrollerErrorCodes } from "../../FusePoolEditPage";
-import { SwitchCSS } from "../../../../shared/SwitchCSS";
+import { SwitchCSS } from "../../../../../shared/SwitchCSS";
 
 import {
   convertMantissaToAPR,
   convertMantissaToAPY,
-} from "../../../../../utils/apyUtils";
+} from "../../../../../../utils/apyUtils";
 
 enum UserAction {
   NO_ACTION,
@@ -365,15 +365,15 @@ const AmountSelect = ({
       const cToken = new fuse.web3.eth.Contract(
         isETH
           ? JSON.parse(
-              fuse.compoundContracts[
-                "contracts/CEtherDelegate.sol:CEtherDelegate"
-              ].abi
-            )
+            fuse.compoundContracts[
+              "contracts/CEtherDelegate.sol:CEtherDelegate"
+            ].abi
+          )
           : JSON.parse(
-              fuse.compoundContracts[
-                "contracts/CErc20Delegate.sol:CErc20Delegate"
-              ].abi
-            ),
+            fuse.compoundContracts[
+              "contracts/CErc20Delegate.sol:CErc20Delegate"
+            ].abi
+          ),
         asset.cToken
       );
 
@@ -667,8 +667,8 @@ const AmountSelect = ({
               // If the size is small, this means the text is large and we don't want the font size scale animation.
               className={
                 isMobile ||
-                depositOrWithdrawAlertFontSize === "14px" ||
-                depositOrWithdrawAlertFontSize === "15px"
+                  depositOrWithdrawAlertFontSize === "14px" ||
+                  depositOrWithdrawAlertFontSize === "15px"
                   ? "confirm-button-disable-font-size-scale"
                   : ""
               }
@@ -730,7 +730,7 @@ const TabBar = ({
         {`
             
             .chakra-tabs__tab {
-              color: ${color ?? "#FFFFFF"} !important;
+              color: ${ color ?? "#FFFFFF" } !important;
 
               border-bottom-width: 1px;
             }
@@ -837,9 +837,9 @@ const StatsColumn = ({
               fuse.web3.utils.toBN(
                 totalSupply > 0
                   ? new BigNumber(assetToBeUpdated.totalBorrow)
-                      .dividedBy(totalSupply.toString())
-                      .multipliedBy(1e18)
-                      .toFixed(0)
+                    .dividedBy(totalSupply.toString())
+                    .multipliedBy(1e18)
+                    .toFixed(0)
                   : 0
               )
             ),
@@ -864,9 +864,9 @@ const StatsColumn = ({
               fuse.web3.utils.toBN(
                 totalSupply > 0
                   ? new BigNumber(assetToBeUpdated.totalBorrow)
-                      .dividedBy(totalSupply.toString())
-                      .multipliedBy(1e18)
-                      .toFixed(0)
+                    .dividedBy(totalSupply.toString())
+                    .multipliedBy(1e18)
+                    .toFixed(0)
                   : 0
               )
             ),
@@ -891,9 +891,9 @@ const StatsColumn = ({
               fuse.web3.utils.toBN(
                 assetToBeUpdated.totalSupply > 0
                   ? new BigNumber(totalBorrow.toString())
-                      .dividedBy(assetToBeUpdated.totalSupply)
-                      .multipliedBy(1e18)
-                      .toFixed(0)
+                    .dividedBy(assetToBeUpdated.totalSupply)
+                    .multipliedBy(1e18)
+                    .toFixed(0)
                   : 0
               )
             ),
@@ -918,9 +918,9 @@ const StatsColumn = ({
               fuse.web3.utils.toBN(
                 assetToBeUpdated.totalSupply > 0
                   ? new BigNumber(totalBorrow.toString())
-                      .dividedBy(assetToBeUpdated.totalSupply)
-                      .multipliedBy(1e18)
-                      .toFixed(0)
+                    .dividedBy(assetToBeUpdated.totalSupply)
+                    .multipliedBy(1e18)
+                    .toFixed(0)
                   : 0
               )
             ),
@@ -945,8 +945,8 @@ const StatsColumn = ({
     updatedAssets ?? [],
     enableAsCollateral
       ? {
-          ignoreIsEnabledCheckFor: asset.cToken,
-        }
+        ignoreIsEnabledCheckFor: asset.cToken,
+      }
       : undefined
   );
 
@@ -1002,7 +1002,7 @@ const StatsColumn = ({
                   {" → "}
                   {smallUsdFormatter(
                     updatedAsset!.supplyBalance /
-                      10 ** updatedAsset!.underlyingDecimals
+                    10 ** updatedAsset!.underlyingDecimals
                   ).replace("$", "")}
                 </>
               ) : null}{" "}
@@ -1151,7 +1151,7 @@ const TokenNameAndMaxButton = ({
             width="100%"
             height="100%"
             borderRadius="50%"
-            backgroundImage={`url(${SmallWhiteCircle})`}
+            backgroundImage={`url(${ SmallWhiteCircle })`}
             src={logoURL}
             alt=""
           />
