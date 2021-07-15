@@ -1,0 +1,26 @@
+import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client';
+
+const API_URL = "https://api.thegraph.com/subgraphs/name/platocrat/fuse-subgraph";
+
+const tokensQuery = gql`
+  query {
+    tokens {
+      id
+      tokenID
+      contentURI
+      metadataURI
+    }
+  }
+`
+
+const client = new ApolloClient({
+  uri: API_URL,
+  cache: new InMemoryCache()
+});
+
+
+client.query({
+  query: gql(tokensQuery)
+})
+  .then(data => console.log("Subgraph data: ", data))
+  .catch(err => { console.log("Error fetching data: ", err) });
