@@ -22,6 +22,11 @@ import { useFusePools } from "hooks/fuse/useFusePools";
 import Footer from "components/shared/Footer";
 import { memo } from "react";
 
+
+/** @dev Imports for Analytics */
+/* External imports */
+import ExampleTimeSeries from './ExampleTimeSeries'
+
 const FusePoolsPage = memo(() => {
   const { isAuthed } = useRari();
   const isMobile = useIsSmallScreen();
@@ -40,6 +45,10 @@ const FusePoolsPage = memo(() => {
         <Header isAuthed={isAuthed} isFuse />
         <FuseStatsBar />
 
+        <DashboardBox width='100%' mt={4} padding={2}>
+          <ExampleTimeSeries />
+        </DashboardBox>
+
         <FuseTabBar />
 
         <DashboardBox width="100%" mt={4}>
@@ -50,6 +59,19 @@ const FusePoolsPage = memo(() => {
       </Column>
     </>
   );
+
+  // render(
+  //   <ParentSize>
+  //     {
+  //       ({ width, height }) =>
+  //         <ExampleTimeSeries
+  //           width={width}
+  //           height={height}
+  //         />
+  //     }
+  //   </ParentSize>,
+  //   document.getElementById('root')
+  // );
 });
 
 export default FusePoolsPage;

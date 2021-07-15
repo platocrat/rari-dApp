@@ -83,7 +83,7 @@ export const Header = ({
 
         <PoolsLink ml={3} />
 
-        <HeaderLink ml={4} name={t("Fuse")} route="/fuse" />
+        <FuseLink ml={4} />
 
         <HeaderLink ml={4} name={t("Pool2")} route="/pool2" />
 
@@ -115,6 +115,34 @@ export const Header = ({
 
       <AccountButton />
     </Row>
+  );
+};
+
+export const FuseLink = ({
+  ml,
+}: {
+  ml?: number | string;
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <Box ml={ml ?? 0}>
+      <Menu autoSelect={false} placement="bottom">
+        <MenuButton>
+          <SubMenuText text={t("Fuse")} parentLink="/fuse" />
+        </MenuButton>
+
+        <Portal>
+          <MenuList {...DASHBOARD_BOX_PROPS} color="#FFF" minWidth="110px">
+            <SubMenuItem name={t("Fuse")} link="/fuse" />
+            <SubMenuItem
+              name={t("Analyitcs")}
+              link="/fuse/analytics"
+            />
+          </MenuList>
+        </Portal>
+      </Menu>
+    </Box>
   );
 };
 
