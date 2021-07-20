@@ -1,7 +1,4 @@
 /** 
- * @dev Need to turn this into its own file and use it to store data of ALL
- *      user addresses
- * 
  * GQL-request
  */
 import { GraphQLClient } from "graphql-request";

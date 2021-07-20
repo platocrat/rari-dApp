@@ -1,26 +1,6 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
-import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client';
-
-const API_URL = "https://api.thegraph.com/subgraphs/name/platocrat/fuse-subgraph";
-
-const TOTAL_SUPPLY_PER_MARKET_IN_POOL_0 = gql`
- query  {
-    pools(orderBy: index, orderDirection: asc, first: 1) {
-      id
-      index
-      markets(orderBy: totalSupply, first: 10) {
-        id
-        underlyingName
-        totalSupply
-      }
-    }
-  }
-`
-
-const client = new ApolloClient({
-  uri: API_URL,
-  cache: new InMemoryCache()
-});
+import { filterOnlyObjectProperties } from "utils/fetchFusePoolData";
+import useFuseAllUserAddresses from "hooks/fuse/useFuseAllUserAddresses"
 
 // Dummy data
 const data = [
@@ -32,47 +12,35 @@ const data = [
   { name: 'Page F', uv: 600, pv: 2400, amt: 2400 },
 ]
 
+
+// function getUnderlyingNames(query: any) {
+//   let pools = query.data.pools
+//   let underlyingNames = []
+
+//   for (let i = 0; i < pools.length; i++) {
+//     let markets = pools[i].markets
+//     for (let j = 0; j < markets.length; j++) {
+//       underlyingNames.push(markets[i].underlyingName)
+//     }
+//   }
+
+//   return underlyingNames
+// }
+
 const ExampleTimeSeries = () => {
   /**
    * @dev How to get certain data from the object returned from `useQuery()`:
    *
-   * 2. `Market` typename:        subgraphData.data.pools[0].__typename
-   * 2. `Market` address:         subgraphData.data.pools[0].id
-   * 3. `Market` underlyingName:  subgraphData.data.pools[0].underlyingName
-   * 4. `Market` underlyingName:  subgraphData.data.pools[0].totalSupply
+   * 1. `Market` typename:        subgraphData.data.pools[i].markets[i].__typename
+   * 2. `Market` address:         subgraphData.data.pools[i].markets[i].id
+   * 3. `Market` underlyingName:  subgraphData.data.pools[i].markets[i].underlyingName
+   * 4. `Market` underlyingName:  subgraphData.data.pools[i].markets[i].totalSupply
+   * 5. `Pool` id:                subgraphData.data.pools[i].id
+   * 6. `Pool` index:             subgraphData.data.pools[i].index
+   * 7. `Market` typename:        subgraphData.data.pools[i].__typename
    */
-  const subgraphData = useQuery(
-    TOTAL_SUPPLY_PER_MARKET_IN_POOL_0,
-    {
-      client: client
-    }
-  )
-
-  console.log(
-    '\n Subgraph data using useQuery from ApolloClient: ',
-    subgraphData.data
-  )
-
-  // function runSubgraphQuery() {
-  //   const subgraphQuery = client
-  //     .query({ query: tokensQuery })
-  //     .then(data => {
-  //       return data
-  //     })
-  //     .catch(error => {
-  //       return console.error(
-  //         '\n Subgraph query failed with the following error: ',
-  //         error
-  //       )
-  //     })
-
-  //   return subgraphQuery
-  // }
-
-  // const subgraphData = runSubgraphQuery()
-  // console.log('\n Subgraph data: ', subgraphData.then(data => {
-  //   return data
-  // }))
+  // Get all addresses 
+  const addresses = useFuseAllUserAddresses("")
 
   // Return statement
   return (
@@ -90,26 +58,13 @@ const ExampleTimeSeries = () => {
         <Tooltip />
       </LineChart >
       <div style={{ padding: '20px', margin: '50px' }}>
-        {subgraphData.data ?
+        {
           <div style={{ padding: '20px', margin: '10px' }}>
-            {
-              /**
-               * @dev Need to be able to render this to test other queries
-               */
-              subgraphData.data.pools.map((index: number) => {
-                <div key={index}>
-                  {subgraphData.data.pools[index].underlyingName}
-                </div>
-              })
-            }
-          </div>
-          :
-          <div style={{ padding: '20px' }}>
-            Loading data
+            {addresses}
           </div>
         }
       </div>
-    </div>
+    </div >
   )
 }
 
