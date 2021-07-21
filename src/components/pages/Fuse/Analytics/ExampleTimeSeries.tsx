@@ -1,6 +1,20 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
+import { useQuery } from '@apollo/client';
+
 import { filterOnlyObjectProperties } from "utils/fetchFusePoolData";
-import useFuseAllUserAddresses from "hooks/fuse/useFuseAllUserAddresses"
+import { client } from 'utils/apolloClient'
+import { GET_ALL_USER_ADDRESSES } from "utils/gql/GET_ALL_USER_ADDRESSES";
+import useGetAllUserAddresses, { Account } from "hooks/fuse/useFuseGetAllUserAddresses";
+import getAllUserBalances from "hooks/fuse/useFuseGetAllUserBalances";
+
+export type QueriedAccounts = {
+  accounts: string[]
+}
+
+interface UserAddress {
+  index: number;
+  userAddress: string;
+}
 
 // Dummy data
 const data = [
@@ -13,57 +27,76 @@ const data = [
 ]
 
 
-// function getUnderlyingNames(query: any) {
-//   let pools = query.data.pools
-//   let underlyingNames = []
+const getAllAddresses = (query: any) => {
+  let accounts = query.accounts
+  let addresses = []
 
-//   for (let i = 0; i < pools.length; i++) {
-//     let markets = pools[i].markets
-//     for (let j = 0; j < markets.length; j++) {
-//       underlyingNames.push(markets[i].underlyingName)
-//     }
-//   }
+  if (accounts) {
+    for (let i = 0; i < accounts.length; i++) {
+      let id = accounts[i].id
+      addresses.push(id)
+    }
+  }
 
-//   return underlyingNames
-// }
+  return addresses
+}
+
+
 
 const ExampleTimeSeries = () => {
-  /**
-   * @dev How to get certain data from the object returned from `useQuery()`:
-   *
-   * 1. `Market` typename:        subgraphData.data.pools[i].markets[i].__typename
-   * 2. `Market` address:         subgraphData.data.pools[i].markets[i].id
-   * 3. `Market` underlyingName:  subgraphData.data.pools[i].markets[i].underlyingName
-   * 4. `Market` underlyingName:  subgraphData.data.pools[i].markets[i].totalSupply
-   * 5. `Pool` id:                subgraphData.data.pools[i].id
-   * 6. `Pool` index:             subgraphData.data.pools[i].index
-   * 7. `Market` typename:        subgraphData.data.pools[i].__typename
-   */
   // Get all addresses 
-  const addresses = useFuseAllUserAddresses("")
+  const addresses = getAllAddresses(useGetAllUserAddresses(""))
+
+  let addresses_ = useGetAllUserAddresses("")
+
+  function convertToObjectHashMap() {
+    const accounts = addresses_.accounts
+
+    let hashMap: UserAddress
+    let arrayOfHashMap = []
+
+    if (accounts) {
+      for (let i = 0; i < accounts.length; i++) {
+        hashMap = {
+          index: 0,
+          userAddress: ''
+        }
+        hashMap.index = i
+        hashMap.userAddress = accounts[i].id
+        arrayOfHashMap.push(hashMap)
+      }
+    }
+
+    return arrayOfHashMap
+  }
+
+  console.log(
+    '1000 user addresses returned from subgraph query: \n',
+    // getAllAddresses(useGetAllUserAddresses(""))
+    getAllUserBalances(addresses)
+  )
+
+  console.log(
+    '1000 user addresses returned from subgraph query: \n',
+    // getAllAddresses(useGetAllUserAddresses(""))
+    getAllUserBalances(addresses)
+  )
 
   // Return statement
   return (
     <div>
       <LineChart
-        width={600}
+        width={900}
         height={300}
-        data={data}
+        data={convertToObjectHashMap()}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+        <Line type="monotone" dataKey="userAddress" stroke="#8884d8" />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="index" />
         <YAxis />
         <Tooltip />
       </LineChart >
-      <div style={{ padding: '20px', margin: '50px' }}>
-        {
-          <div style={{ padding: '20px', margin: '10px' }}>
-            {addresses}
-          </div>
-        }
-      </div>
     </div >
   )
 }
