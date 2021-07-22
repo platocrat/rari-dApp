@@ -1,18 +1,8 @@
-import { useState } from "react";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
-
-import { filterOnlyObjectProperties } from "utils/fetchFusePoolData";
-import useFuseTotalBorrowAndSupplyUSD from "hooks/fuse/useFuseTotalBorrowAndSupplyUSD";
+import fuseTotalBorrowAndSupplyUSD from "utils/fuseTotalBorrowAndSupplyUSD";
+import useSWR from "swr";
+import { useState } from "react";
 import { useEffect } from "react";
-
-export type QueriedAccounts = {
-  accounts: string[]
-}
-
-interface UserAddress {
-  index: number;
-  userAddress: string;
-}
 
 // Dummy data
 const data = [
@@ -24,22 +14,54 @@ const data = [
   { name: 'Page F', uv: 600, pv: 2400, amt: 2400 },
 ]
 
+// function useTotalSuppliedAndBorrowedUSD(_blockNumbers: number[]) {
+//   const [totalSuppliedAndBorrowedUSD, setTotalSuppliedAndBorrowedUSD] = useState([])
+//   let TSLBS_USD: any = []
 
-function historicalTotalBorrowAndSupplyUSD() {
+//   useEffect(() => {
+//     for (let i = 0; i < _blockNumbers.length; i++) {
+//       TSLBS_USD.push(fuseTotalBorrowAndSupplyUSD(_blockNumbers[i]))
+//     }
 
+//     setTotalSuppliedAndBorrowedUSD(TSLBS_USD as any)
+//   })
+
+
+//   return totalSuppliedAndBorrowedUSD
+// }
+
+function useTSB_USD() {
+  const [totalSuppliedAndBorrowedUSD, setTotalSuppliedAndBorrowedUSD] = useState([])
+
+  useEffect(() => {
+    fuseTotalBorrowAndSupplyUSD()
+      .then((totalSuppliedAndBorrowedUSD: any) => {
+        setTotalSuppliedAndBorrowedUSD(totalSuppliedAndBorrowedUSD)
+      })
+  }, [])
+
+  return totalSuppliedAndBorrowedUSD
 }
 
 const ExampleTimeSeries = () => {
-  const totalBorrowAndSupplyUSD: any = useFuseTotalBorrowAndSupplyUSD()
+  // console.log('TotalBorrowAndSupplyUSD: ', totalBorrowAndSupplyUSD)
+  const totalSuppliedAndBorrowedUSD = useTSB_USD()
 
-  console.log('TotalBorrowAndSupplyUSD: ', totalBorrowAndSupplyUSD)
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+
+
+  // const totalBorrowAndSupplyUSD = fuseTotalBorrowAndSupplyUSD(blockNumbers[0])
+
+
+  console.log('Total borrow and suppl usd: ', totalSuppliedAndBorrowedUSD)
+
   // Return statement
   return (
     <div>
       <LineChart
         width={900}
         height={300}
-        data={totalBorrowAndSupplyUSD}
+        data={totalSuppliedAndBorrowedUSD}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
         <Line type="monotone" dataKey="totalBorrowedUSD" stroke="#8884d8" />
