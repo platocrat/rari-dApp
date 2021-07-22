@@ -1,5 +1,5 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
-import fuseTotalBorrowAndSupplyUSD from "utils/fuseTotalBorrowAndSupplyUSD";
+import useFuseTotalSuppliedAndBorrowedUSD from "hooks/fuse/useFuseTotalSuppliedAndBorrowedUSD";
 import useSWR from "swr";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -34,7 +34,7 @@ function useTSB_USD() {
   const [totalSuppliedAndBorrowedUSD, setTotalSuppliedAndBorrowedUSD] = useState([])
 
   useEffect(() => {
-    fuseTotalBorrowAndSupplyUSD()
+    useFuseTotalSuppliedAndBorrowedUSD()
       .then((totalSuppliedAndBorrowedUSD: any) => {
         setTotalSuppliedAndBorrowedUSD(totalSuppliedAndBorrowedUSD)
       })

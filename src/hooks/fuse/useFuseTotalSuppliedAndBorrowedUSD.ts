@@ -3,10 +3,10 @@ import axios from "axios";
 import useSWR from "swr";
 
 /* Internal imports */
-import Rari from "../rari-sdk/index";
+import Rari from "../../rari-sdk/index";
 import {
   turboGethURL,
-} from "./web3Providers";
+} from "../../utils/web3Providers";
 
 export interface APIFuseTVL {
   totalSuppliedUSD: number;
@@ -17,7 +17,7 @@ const FUSE_TOTAL_BORROW_AND_SUPPLY_USD_URL = "https://beta.rari.capital/api/fuse
 const rari = new Rari(turboGethURL);
 const FUSE_FIRST_BLOCKNUMBER = 12060024
 
-export default async function useTotalSuppliedAndBorrowedUSD() {
+export default async function useFuseTotalSuppliedAndBorrowedUSD() {
   const blockNumbers = await fuseHistoricalBlockNumbers()
   let TSB_USD: any = []
 
