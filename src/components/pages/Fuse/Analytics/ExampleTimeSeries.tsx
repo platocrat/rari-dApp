@@ -1,8 +1,5 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
-import useFuseTotalSuppliedAndBorrowedUSD from "hooks/fuse/useFuseTotalSuppliedAndBorrowedUSD";
-import useSWR from "swr";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useTVLsSinceStartDate } from "utils/useFuseTVLs";
 
 // Dummy data
 const data = [
@@ -14,46 +11,35 @@ const data = [
   { name: 'Page F', uv: 600, pv: 2400, amt: 2400 },
 ]
 
-// function useTotalSuppliedAndBorrowedUSD(_blockNumbers: number[]) {
-//   const [totalSuppliedAndBorrowedUSD, setTotalSuppliedAndBorrowedUSD] = useState([])
-//   let TSLBS_USD: any = []
-
-//   useEffect(() => {
-//     for (let i = 0; i < _blockNumbers.length; i++) {
-//       TSLBS_USD.push(fuseTotalBorrowAndSupplyUSD(_blockNumbers[i]))
-//     }
-
-//     setTotalSuppliedAndBorrowedUSD(TSLBS_USD as any)
-//   })
-
-
-//   return totalSuppliedAndBorrowedUSD
-// }
-
-function useTSB_USD() {
-  const [totalSuppliedAndBorrowedUSD, setTotalSuppliedAndBorrowedUSD] = useState([])
-
-  useEffect(() => {
-    useFuseTotalSuppliedAndBorrowedUSD()
-      .then((totalSuppliedAndBorrowedUSD: any) => {
-        setTotalSuppliedAndBorrowedUSD(totalSuppliedAndBorrowedUSD)
-      })
-  }, [])
-
-  return totalSuppliedAndBorrowedUSD
+interface OrderedTVL {
+  index: number;
+  id: string;
+  totalSuppliedUSD: number;
+  totalBorrowedUSD: number;
+  ethUSDPrice: number;
+  blockTimestamp: string;
+  blockNumber: number;
+  blockDate: string;
 }
 
 const ExampleTimeSeries = () => {
-  // console.log('TotalBorrowAndSupplyUSD: ', totalBorrowAndSupplyUSD)
-  const totalSuppliedAndBorrowedUSD = useTSB_USD()
+  let tvls: any = useTVLsSinceStartDate('18-03-2021');
+  tvls ? tvls = tvls.data : tvls = tvls;
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  console.log('Total borrow and supply in usd: ', tvls);
 
+  let orderedTVLs: OrderedTVL[];
 
-  // const totalBorrowAndSupplyUSD = fuseTotalBorrowAndSupplyUSD(blockNumbers[0])
+  /**
+   * @todo Convert array of TVL objects to a new _ordered_ array of TVL objects.
+   *       Also, add an `index` field to each TVL object by using OrderedTVL
+   *       interface.
+   */
+  function orderTVLs() {
+    const _tvls = tvls.data;
 
-
-  console.log('Total borrow and suppl usd: ', totalSuppliedAndBorrowedUSD)
+    return orderedTVLs;
+  }
 
   // Return statement
   return (
@@ -61,12 +47,12 @@ const ExampleTimeSeries = () => {
       <LineChart
         width={900}
         height={300}
-        data={totalSuppliedAndBorrowedUSD}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+        data={tvls}
+        margin={{ top: 15, right: 40, bottom: 15, left: 40 }}
       >
         <Line type="monotone" dataKey="totalBorrowedUSD" stroke="#8884d8" />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-        <XAxis dataKey="" />
+        <XAxis dataKey="blockDate" />
         <YAxis />
         <Tooltip />
       </LineChart >
