@@ -1,4 +1,4 @@
-import { Avatar, AvatarGroup, Link, Spinner, Text } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Link, Spinner, Text, Heading } from "@chakra-ui/react";
 import { Center, Column, Row, useIsMobile } from "utils/chakraUtils";
 import { useTranslation } from "react-i18next";
 import { useRari } from "context/RariContext";
@@ -25,7 +25,9 @@ import { memo } from "react";
 
 /** @dev Imports for Analytics */
 /* External imports */
-import ExampleTimeSeries from './ExampleTimeSeries'
+import FuseTotalBorrowedUSD from "./FuseTotalBorrowedUSD"
+import FuseTotalSuppliedUSD from "./FuseTotalSuppliedUSD"
+import FuseUserCapital from "./FuseUserCapital"
 
 const FusePoolsPage = memo(() => {
   const { isAuthed } = useRari();
@@ -44,9 +46,31 @@ const FusePoolsPage = memo(() => {
       >
         <Header isAuthed={isAuthed} isFuse />
         <FuseStatsBar />
+        
+        <DashboardBox width='100%' mt={4} padding={5}>
+          <Heading size="lg" textAlign="center" paddingBottom="7">
+            TVLs
+          </Heading>
+          <Heading size="md" textAlign="center">
+            Total Borrowed in USD($) since Fuse launched
+          </Heading>
+          <FuseTotalBorrowedUSD />
+          <br />
+          <Heading size="md" textAlign="center">
+            Total Supplied in USD($) since Fuse launched
+          </Heading>
+          <FuseTotalSuppliedUSD />
+        </DashboardBox>
+        
+        {/* New visuals */}
+        <DashboardBox width='100%' mt={4} padding={5}>
+          <Heading size="lg" textAlign="center" paddingBottom="7">
+            User Capital
+          </Heading>
+          <Heading size="" textAlign="center">
 
-        <DashboardBox width='100%' mt={4} padding={2}>
-          <ExampleTimeSeries />
+          </Heading>
+            <FuseUserCapital />
         </DashboardBox>
 
         <FuseTabBar />
@@ -64,7 +88,7 @@ const FusePoolsPage = memo(() => {
   //   <ParentSize>
   //     {
   //       ({ width, height }) =>
-  //         <ExampleTimeSeries
+  //         <TotalBorrowedUSD
   //           width={width}
   //           height={height}
   //         />
